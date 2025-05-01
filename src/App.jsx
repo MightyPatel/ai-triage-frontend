@@ -1,8 +1,16 @@
+
 import { useState } from 'react';
 import './App.css';
+import ClinicMap from './ClinicMap';
 
 function App() {
   const [form, setForm] = useState({
+    name: '',
+    age: '',
+    gender: '',
+    conditions: '',
+    medications: '',
+    location: '',
     symptom: '',
     duration: '',
     severity: '',
@@ -41,10 +49,21 @@ function App() {
     <div className="container">
       <h1>AI Triage Assistant</h1>
       <form onSubmit={handleSubmit}>
-        <input name="symptom" placeholder="Main symptom" onChange={handleChange} required />
+        <input name="name" placeholder="Full Name" onChange={handleChange} required />
+        <input name="age" type="number" placeholder="Age" onChange={handleChange} required />
+        <select name="gender" onChange={handleChange} required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input name="conditions" placeholder="Existing Conditions" onChange={handleChange} />
+        <input name="medications" placeholder="Current Medications" onChange={handleChange} />
+        <input name="location" placeholder="Postal Code or City" onChange={handleChange} required />
+        <input name="symptom" placeholder="Main Symptom" onChange={handleChange} required />
         <input name="duration" placeholder="Duration (e.g. 2 days)" onChange={handleChange} required />
         <input name="severity" placeholder="Severity (e.g. mild, severe)" onChange={handleChange} required />
-        <input name="extras" placeholder="Other symptoms" onChange={handleChange} />
+        <input name="extras" placeholder="Other Symptoms" onChange={handleChange} />
         <button type="submit" disabled={loading}>
           {loading ? 'Analyzing...' : 'Submit'}
         </button>
@@ -59,6 +78,20 @@ function App() {
             <>
               <p><strong>Urgency:</strong> {result.urgency}</p>
               <p><strong>Doctor Type:</strong> {result.doctor_type}</p>
+              {result.specialist && <p><strong>Specialist:</strong> {result.specialist}</p>}
+              {result.nearby && result.nearby.length > 0 && (
+                <>
+                  <h4>Nearby Clinics:</h4>
+                  <ul>
+                    {result.nearby.map((clinic, index) => (
+                      <li key={index}>
+                        {clinic.name} - {clinic.address}
+                      </li>
+                    ))}
+                  </ul>
+                  <ClinicMap clinics={result.nearby} />
+                </>
+              )}
             </>
           )}
         </div>
