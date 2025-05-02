@@ -23,3 +23,39 @@ button {
   background: #f0f0f0;
   border-radius: 5px;
 }
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+form input,
+form select,
+form button {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.result {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
